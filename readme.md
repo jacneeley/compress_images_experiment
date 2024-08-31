@@ -4,9 +4,12 @@
 Experiment with Bicubic Interpolation to resize a reduced image back to a 1080p resolution image or greater using python.
 
 ### Results
+![alt text](images/comparison2.png)
+**note: this is a digital image**
+
 ![alt text](images/comparison.png)
 
-**note: image tested is a high resolution 35mm film scan**
+**note: image is a high resolution 35mm film scan**
 
 #### Using Bicubic Interpolation
 Reducing an image of ```6048 x 4011``` resolution by a factor of 10 then resizing the image back up to half it's original resolution ```3024 x 2006``` using bicubic interpolation to replace the missing pixels, reduced the file size from ```5.2mb``` to ```756.7kb```. This leads to an approximate 86% reduction in file size. 

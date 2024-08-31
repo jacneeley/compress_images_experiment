@@ -1,7 +1,7 @@
 from PIL import Image
 
 def reduce_image_by_factor(fin:str, fout:str, factor:int) -> None:
-    print("reducing image by",factor)
+    print("reducing image by a factor of",factor)
     try:
         img = Image.open(fin)
         img = img.reduce(factor)

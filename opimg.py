@@ -4,66 +4,56 @@ from PIL import Image
 from bi import bicubic_resize
 from simple import reduce_image_by_factor
 
-def optimize(img_path:str)-> None:
-	simple:str = input("Simple reduction(y/n)? ")
-	is_simple:bool = simple_reduction(simple)
-	img_size:int = 0
-	comp_size:int = 0
-	
-	#dir
-	if os.path.isdir(img_path):
-		f_list = os.listdir(img_path)
+def op_dir(img_dir:str, is_simple:bool) -> None:
+    og_size:int = Image.open(img_dir).size[0]
+    curr_size:int = 0
+    f_list = os.listdir(img_dir)
 		
-		if len(f_list) == 0:
-			return "directory was empty..."
-		print("files in directory: ", f_list)
-		
-		for f in f_list:
-			path:str = img_path + "/" + f
-			og_size:int = Image.open(path).size[0]
-			print("file:",f)
-			img_size:str = str(os.path.getsize(path) / 1024) + "KB"
-			
-			if is_simple:
-				factor = int(input("Enter reduction factor: "))
-				reduce_image_by_factor(path, path, factor)
-			else:
-				reduce_image_by_factor(path, path, 10)
-				curr_size:int = Image.open(path).size[0]
-				p = curr_size / og_size
-				f = p * 100			
-				ratio = f // 2
-				print("ratio",ratio)
-				bicubic_resize(path,ratio)
-			
-			comp_size:str = str(os.path.getsize(path) / 1024) + "KB"
-			print("Original size: ", img_size,"\nCompressed Size", comp_size)
-	#file
-	elif os.path.isfile(img_path):
-		if is_simple:
-			factor = int(input("Enter reduction factor: "))
-			reduce_image_by_factor(img_path, img_path, factor)
-		else:
-			reduce_image_by_factor(img_path, img_path, 10)
-			curr_size = Image.open(img_path).size[0]
-			p = curr_size / og_size
-			f = p * 100			
-			ratio = f // 2
-			print("ratio:",ratio)
-			bicubic_resize(img_path,ratio)
-	else:
-		print("Input is invalid...")
+    if len(f_list) == 0:
+        print("directory was empty...")
+        return
+    
+    print("files in directory: ", f_list)
 
-def simple_reduction(simple:str) -> bool:
-	if simple == "y":
-		return True
-	else:
-		return False
+    for f in f_list:
+        path:str = img_dir + "/" + f
+        print("file:",f)
+        img_size:str = str(os.path.getsize(path) / 1024) + "KB"
+        
+        if is_simple:
+            factor = int(input("Enter reduction factor: "))
+            reduce_image_by_factor(path, path, factor)
+        else:
+            reduce_image_by_factor(path, path, 10)
+            curr_size = Image.open(img_dir).size[0]
+            p = curr_size / og_size
+            f = p * 100			
+            ratio = f // 2
+            print("ratio",ratio)
+            bicubic_resize(path,ratio)
+			
+        comp_size:str = str(os.path.getsize(path) / 1024) + "KB"
+        print("Original size: ", img_size,"\nCompressed Size", comp_size)
 
-if __name__ == "__main__":
-	img_dir:str = input("enter image dir: ")
-	start = time.time()
-	optimize(img_dir)
-	end = time.time()
-	final = end - start
-	print("time elapsed: ",final, "second(s)") if final > 60 else print("time elapsed: ",final / 60, "minute(s)")
+def op_img(img_path:str, is_simple) -> None:
+    og_size:int = Image.open(img_path).size[0]
+    if is_simple:
+        factor = int(input("Enter reduction factor: "))
+        reduce_image_by_factor(img_path, img_path, factor)
+    else:
+        factor = calc_factor(og_size)
+        reduce_image_by_factor(img_path, img_path, factor)			
+        ratio = factor // 2
+        print("ratio:",ratio)
+        bicubic_resize(img_path,ratio)
+
+def calc_factor(size:int) -> int:
+    if size < 10000:
+        return 10
+    if size < 5000:
+        return 4
+    if size < 4000:
+        return 3
+    if size < 3000:
+        return 2
+    

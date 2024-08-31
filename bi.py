@@ -101,11 +101,9 @@ def bicubic(img, ratio, a):
 	return dst
 
 def bicubic_resize(img_file:str, ratio:int):
-	img_file = img_file.split(".")
-	new_name:str = img_file[0] + "_compressed" + "." + img_file[1]
 	img = cv2.imread(img_file)
-
 	dst = bicubic(img, ratio, -1/2)
 	print('done.')
-
+	img_file = img_file.split(".")
+	new_name:str = img_file[0] + "_compressed" + "." + img_file[1]
 	cv2.imwrite(new_name, dst)
