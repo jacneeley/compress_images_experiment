@@ -37,23 +37,27 @@ def op_dir(img_dir:str, is_simple:bool) -> None:
 
 def op_img(img_path:str, is_simple) -> None:
     og_size:int = Image.open(img_path).size[0]
+    factor:int = 0
     if is_simple:
         factor = int(input("Enter reduction factor: "))
         reduce_image_by_factor(img_path, img_path, factor)
     else:
         factor = calc_factor(og_size)
+        if factor == 0:
+            print("could not determine factor...")
+            return
         reduce_image_by_factor(img_path, img_path, factor)			
         ratio = factor // 2
         print("ratio:",ratio)
         bicubic_resize(img_path,ratio)
 
 def calc_factor(size:int) -> int:
-    if size < 10000:
+    if size > 5000 and size < 10000:
         return 10
-    if size < 5000:
-        return 4
-    if size < 4000:
-        return 3
     if size < 3000:
         return 2
+    if size < 4000:
+        return 3
+    if size < 5000:
+        return 4
     
