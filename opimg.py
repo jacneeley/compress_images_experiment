@@ -39,7 +39,7 @@ def optimize(img_path:str)-> None:
 			comp_size:str = str(os.path.getsize(path) / 1024) + "KB"
 			print("Original size: ", img_size,"\nCompressed Size", comp_size)
 	#file
-	else:
+	elif os.path.isfile(img_path):
 		if is_simple:
 			factor = int(input("Enter reduction factor: "))
 			reduce_image_by_factor(img_path, img_path, factor)
@@ -51,6 +51,8 @@ def optimize(img_path:str)-> None:
 			ratio = f // 2
 			print("ratio:",ratio)
 			bicubic_resize(img_path,ratio)
+	else:
+		print("Input is invalid...")
 
 def simple_reduction(simple:str) -> bool:
 	if simple == "y":
