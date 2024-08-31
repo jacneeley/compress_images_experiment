@@ -2,7 +2,7 @@ import os, time
 from PIL import Image
 
 from bi import bicubic_resize
-from simple import reduce_image_by_factor
+from reduce_img import reduce_image_by_factor
 
 def op_dir(img_dir:str, is_simple:bool) -> None:
     og_size:int = Image.open(img_dir).size[0]
