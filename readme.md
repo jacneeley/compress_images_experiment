@@ -28,4 +28,4 @@ Included in the script is the option to do a "simple reduction." A simple reduct
 ```
 
 ## Conclusion
-Opting for simple reduction is faster and in most cases desired, as the user could simply use an optimal factor of reduction that best suits their use case, but the image will greatly lose clearity if the user decides to transform their image to a larger size. Is the bicubic interpolation algorithm to resize a reduced image allows for some clearity if the user decides to transform their image to a larger size.
+Opting for simple reduction is faster and in most cases desired, as the user could simply use an optimal factor of reduction that best suits their use case, but the image will greatly lose clearity if the user decides to transform their image to a larger size. The bicubic interpolation algorithm to resize a reduced image allows for some additional clearity if the user decides to transform their image to a larger size.
